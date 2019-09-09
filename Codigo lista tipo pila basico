@@ -1,0 +1,163 @@
+CLASE NODO:
+public class Nodo {
+    
+    int dato;
+    Nodo siguiente;//se crea consecuentemente en apuntador a otro nodo
+    
+    
+    //constructor
+    public Nodo(int valor){
+        dato=valor;
+        siguiente=null;//valor de arranque
+    }
+    
+Clase PILA:
+public class Pila {//comportamiento
+    private Nodo ultimoValorIngresado;
+    private int tamano=0;
+    String lista="";
+    
+    //constructor
+    public Pila(){
+        ultimoValorIngresado=null; //valor de arranque
+        tamano=0;
+    }
+    //metodos
+    
+    public boolean pilaVacia(){//para ver si la pila esta vacia
+        return ultimoValorIngresado==null;//si el ultimo valor ingresado es vacio,
+                                           //retornará un true, caso contrario retornará un false
+    }
+    
+    //metodo para insertar un nodo en la pila
+    public void insertarNodo(int nodo){/*el parametro va del tipo de dato con el que estemos trabajndo*/
+        
+        Nodo nuevoNodo=new Nodo(nodo);
+        nuevoNodo.siguiente=ultimoValorIngresado;
+        ultimoValorIngresado=nuevoNodo;
+        tamano++;//incrementamos el tamano de la lista
+        
+    }
+    
+    //eliminar nodo
+    public int eliminarNodo(){
+        int auxiliar=ultimoValorIngresado.dato;//guardamos el valor del ultimo dato del nodo
+        ultimoValorIngresado=ultimoValorIngresado.siguiente;//reescribimos el valor del siguiente valor;
+        tamano--;//disminuimos la lista
+        return auxiliar;//retornamos el valor del ultimo dato del nodo;
+    }
+    
+    //metodo para conocer el ultimo valor ingresado
+    public int mostrarUltimoValorIngresado(){
+        return ultimoValorIngresado.dato;
+    }
+    
+    //metodo para conocer el tamaano de la pila
+    public int tamanoPila(){
+        return tamano;
+    }
+    
+    //metodo para vaciar la pila
+    public void vaciarPila(){
+        while(!pilaVacia()){//mientras la pila no este vacia
+            eliminarNodo();
+        }
+    }
+    
+    //metodo para mostrar el contenido de la pila
+    public void mostrarValores(){
+        Nodo recorrido=ultimoValorIngresado;
+        
+        while(recorrido!=null){
+            lista+= recorrido.dato + "\n";//para ir guardando los valores que va a contener nuestra lista
+            recorrido=recorrido.siguiente;
+            
+        }
+        JOptionPane.showMessageDialog(null, lista);
+        lista="";//para limpiar la lista luego de usar el metodo
+    }
+    
+    CLASE PRINCIPAL (Main)
+    public class ListasTipoPila {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        int opcion=0;
+        int nodo=0;
+        
+        Pila pila=new Pila();
+        
+        do{
+            try{
+                
+                opcion=Integer.parseInt(JOptionPane.showInputDialog(null,
+                        "Menú de opciones \n \n"
+                        + "1.Insertar un Nodo\n"
+                        + "2.Eliminar un Nodo\n"
+                        + "3.La pila esta vacia?\n"
+                        + "4.Ultimo valor ingresado en la pila \n"
+                        + "5.Cuantos nodos tiene la pila\n"
+                        + "6.Vaciar Pila\n"
+                        + "7.Mostrar contenido de la pila\n"
+                        + "8.Salir \n\n"));
+                switch(opcion){
+                    case 1:
+                        nodo=Integer.parseInt(JOptionPane.showInputDialog(null, "Ingresa el valor a guardar en el nodo"));
+                        pila.insertarNodo(nodo);
+                        break;
+                    case 2:
+                        if(!pila.pilaVacia()){
+                            JOptionPane.showMessageDialog(null, "Se ha eliminado un nodo con el valor: " + pila.eliminarNodo());
+                        }else{
+                            JOptionPane.showMessageDialog(null, "La pila esta vacia");
+                        }
+                        break;
+                    case 3:
+                        if(pila.pilaVacia()){
+                            JOptionPane.showMessageDialog(null, "La pila esta vacia");
+                            
+                        }else{
+                            JOptionPane.showMessageDialog(null, "La pila NO esta vacia");
+                        }
+                        break;
+                    case 4:
+                        if(!pila.pilaVacia()){
+                            JOptionPane.showMessageDialog(null, "El ultimo valor ingresado en la pila es: "+ pila.mostrarUltimoValorIngresado());
+                        }else{
+                            JOptionPane.showMessageDialog(null, "La pila ya esta vacia");
+                        }
+                        break;
+                    case 5:
+                        JOptionPane.showMessageDialog(null,"La pila contiene "+ pila.tamanoPila()+" nodos.");
+                        break;
+                    case 6:
+                        if(!pila.pilaVacia()){//ientras la pila sea diferente de vacia
+                            pila.vaciarPila();
+                            JOptionPane.showMessageDialog(null,"La pila ha sido vaciada");
+                        }else{
+                            JOptionPane.showMessageDialog(null,"La pila ya esta vacia");
+                        }
+                        break;
+                    case 7:
+                        pila.mostrarValores();
+                        break;
+                    case 8:
+                        opcion=8;//para que salga del do while y cierre el programa
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opcion incorrecta, vuelve a intertar");
+                        break;
+                }
+                
+            }catch(NumberFormatException e){
+                
+            }
+        }while(opcion!=8);
+        
+        
+        
+    }
+    
