@@ -1,0 +1,117 @@
+//Clase HILO 1
+public class Hilo1 extends Thread {
+    
+    @Override
+    public void run(){
+        for(int i=0; i<=5; i++){
+        System.out.print((i+1)+": G");
+        
+            try{
+                Hilo1.sleep(1000);
+            
+            }catch(InterruptedException e){
+                System.out.println("Problema en la clase hilo 1" + e);
+            }
+        }
+        
+    }
+    
+    
+}
+
+//clase HILO 2
+public class Hilo2 extends Thread{
+    
+    @Override
+    public void run(){
+        for(int i=0; i<=5; i++){
+        System.out.print("E");
+            try{
+                Hilo2.sleep(1000);
+            
+            }catch(InterruptedException e){
+                System.out.println("Problema en la clase hilo 2" + e);
+            }
+        }
+    }
+}
+
+//clase HILO 3
+public class Hilo3 extends Thread {
+    
+    @Override
+    public void run(){
+        for(int i=0; i<=5; i++){
+        System.out.print("E");
+            try{
+                Hilo3.sleep(1000);
+            
+            }catch(InterruptedException e){
+                System.out.println("Problema en la clase hilo 3" + e);
+            }
+        }
+    }
+}
+
+//clase HILO 4
+public class Hilo4 extends Thread {
+    
+    @Override
+    public void run(){
+        for(int i=0; i<=5; i++){
+        System.out.println("K");
+            try{
+                Hilo4.sleep(1000);//el for se detiene por un segundo
+            
+            }catch(InterruptedException e){
+                System.out.println("Problema en la clase hilo 4" + e);
+            }
+        }
+    }
+}
+
+//clase PRINCIPAL
+public class Principal {
+    
+    public static void main(String[] args){
+        Hilo1 h1=new Hilo1();
+        Hilo2 h2=new Hilo2();
+        Hilo3 h3=new Hilo3();
+        Hilo4 h4=new Hilo4();
+        
+        //hilo 1
+        h1.start();
+        try{
+            h1.sleep(10);
+        }catch(InterruptedException e){
+            System.out.print("Error en el hilo 1"+ e);
+        }
+        
+        //hilo 2
+        h2.start();
+        try{
+            h2.sleep(10);
+        }catch(InterruptedException e){
+            System.out.print("Error en el hilo 2"+ e);
+        }
+        
+        //hilo 3
+        h3.start();
+        try{
+            h3.sleep(10);
+        }catch(InterruptedException e){
+            System.out.print("Error en el hilo 3"+ e);
+        }
+        
+        //hilo 4
+        h4.start();
+        try{
+            h4.sleep(10);
+        }catch(InterruptedException e){
+            System.out.print("Error en el hilo 4"+ e);
+        }
+        
+        
+        
+    }
+}
