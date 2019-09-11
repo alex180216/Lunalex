@@ -1,0 +1,140 @@
+CLASE NODO
+public class Nodo {
+    
+    int informacion;//gusrdara el elemento dato
+    Nodo siguiente; //apuntador del siguiente nodo
+    
+}
+
+
+CLASE COLA
+public class Cola {
+
+    private Nodo inicioCola, finalCola;
+    String Cola="";//para saber el contenido de la cola
+    
+    public Cola(){
+        inicioCola=null;
+        finalCola=null;
+    }
+    
+    //metodo para saber si la cola esta vacia
+    public boolean colaVacia(){
+        if(inicioCola==null){
+            return true;//esta vacia
+        }else{
+            return false;//no esta vacia
+        }
+    }
+    
+    //metodo para insertar
+    public void insertar(int informacion){//parametro que ingresaremos
+        Nodo nuevoNodo=new Nodo();
+        nuevoNodo.informacion=informacion;
+        nuevoNodo.siguiente=null;//por ser el ultimo en la lista
+        
+        if(colaVacia()){//si la cola esta vacia
+            inicioCola=nuevoNodo;
+            finalCola=nuevoNodo;
+        }else{
+            finalCola.siguiente=nuevoNodo;
+            finalCola=nuevoNodo;
+        }
+        
+    }
+    
+    //metodo para extraer
+    public int extraer(){
+        if(!colaVacia()){
+            int informacion=inicioCola.informacion;
+            
+            if(inicioCola==finalCola){//verifica que lo que este al inicio de la cola sea lo mismo que esta al final de la cola
+                                    //si esto se cumple quiere decir que el elemento que vemos es el ultimo elemento de la cola
+            inicioCola=null;
+            finalCola=null;
+        }else{
+            inicioCola=inicioCola.siguiente;
+        }
+        return informacion;
+        
+    }else{
+            return Integer.MAX_VALUE;
+        }
+    
+    }
+    
+    //metodo para mostrar los elementos de la cola
+    public void mostrarContenido(){
+        Nodo recorrido=inicioCola;
+        String colaInvertida="";
+        
+        while(recorrido != null){
+            Cola += recorrido.informacion + " ";//para que el metodo split detecte los espacios
+            recorrido=recorrido.siguiente;//para ver cuales son los enlaces a los siguientes elementos
+            
+        }
+        
+        String cadena [] = Cola.split(" ");/*el metodo split es para que me imprima al reverso los elementos de la cola
+                                            correctamente y con un espacio.. Ej: 01 10 32, lo va a imprimir 32 10 01
+                                            si no lo coloco, va a imprimir 23 01 10.. que esta malo */
+        
+        for(int i = cadena.length - 1; i>=0; i-- ){
+            colaInvertida+=" "+ cadena[i];//el espacio es para que los valores no se amontonen;
+        }
+        
+        JOptionPane.showMessageDialog(null, colaInvertida);
+        Cola="";
+    }
+}
+
+
+
+CLASE PRINCIPAL
+
+
+public static void main(String[] args) {
+        // TODO code application logic here
+        
+        int opcion=0;
+        int nodoInformacion=0;
+        Cola cola = new Cola();
+        
+        do{
+            try{
+                
+                opcion=Integer.parseInt(JOptionPane.showInputDialog(null, 
+                        "Menu de Opciones: \n\n"
+                        + "1. Insertar numero \n"
+                        + "2. Extraer Nodo \n"
+                        + "3. Mostrar Cola \n"
+                        + "4. Salir \n\n"));
+                
+                switch(opcion){
+                    case 1:
+                        nodoInformacion=Integer.parseInt(JOptionPane.showInputDialog(null, "Ingresa el valor a guardar \n"));
+                        cola.insertar(nodoInformacion);
+                        break;
+                    case 2:
+                        if(!cola.colaVacia()){//si la cola no esta vacia
+                            JOptionPane.showMessageDialog(null, "Se extrajo un nodo con el valor de "+ cola.extraer());
+                        }else{
+                            JOptionPane.showMessageDialog(null, "La cola esta vacia");
+                        }
+                        break;
+                    case 3:
+                        cola.mostrarContenido();
+                        break;
+                    case 4:
+                        opcion=4;
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opcion no disponible, vuelve a intentar");
+                        break;
+                }
+            }catch(NumberFormatException e){
+                
+            }
+            
+        }while(opcion!=4);
+        
+    }
