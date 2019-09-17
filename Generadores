@@ -1,0 +1,9 @@
+//con Random;
+int aleatorio = 0;
+Random r = new Random();
+
+aleatorio = (int)(r.nextDouble()*100);//genera un numero entre 0-100
+System.out.println(aleatorio);
+
+//otro metodo
+int aleatorio = (int)(Math.random()*(maximo-minimo+1)+minimo);
